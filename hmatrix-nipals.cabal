@@ -1,0 +1,38 @@
+Name:                hmatrix-nipals
+Version:             0.1
+Synopsis:
+  Nonlinear Iterative Partial Least Squares method for Principal
+  Components Analysis on large datasets
+
+Description:
+  NIPALS -- Nonlinear Iterative Partial Least Squares, is a method for
+  iteratively finding the left singular vectors of a large matrix. In
+  other words it discovers the largest principal component of a set of
+  mean-centred samples, along with the score (the magnitude of the
+  principal component) for each sample, and the residual of each
+  sample that is orthagonal to the principal component. By repeating
+  the procedure on the residuals, the second principal component is
+  found, and so on.
+
+  The advantage of NIPALS over more traditional methods, like SVD, is
+  that it is memory efficient, and can complete early if only a small
+  number of principal components are needed.
+
+Homepage:            http://github.com/alanfalloon/hmatrix-nipals
+License:             LGPL-2.1
+License-file:        LICENSE
+Author:              Alan Falloon
+Maintainer:          alan.falloon@gmail.com
+Copyright:           Copyright (c) 2011 Alan Falloon
+Stability:           Experimental
+Category:            Math
+Build-type:          Simple
+Cabal-version:       >=1.2
+
+Library
+  Hs-source-dirs:    src
+  Exposed-modules:
+    Numeric.LinearAlgebra.NIPALS
+  Build-depends:
+    base >=4,
+    hmatrix >= 0.11
