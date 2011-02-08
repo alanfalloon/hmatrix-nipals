@@ -3,6 +3,7 @@
 module Numeric.LinearAlgebra.NIPALS
     ( -- * Simplified Interface
       firstPC
+    , firstPCFromScores
     ) where
 
 import Numeric.LinearAlgebra
@@ -17,8 +18,32 @@ import Numeric.LinearAlgebra
 -- 
 -- > let (pc,scores,residuals) = firstPC $ fromRows samples
 -- 
+-- This is calculated by providing a default estimate of the scores to
+-- 'firstPCFromScores'
 firstPC :: Matrix Double -> (Vector Double, Vector Double, Matrix Double)
-firstPC m = (p,t,r)
+firstPC m = firstPCFromScores m t0
+    where
+      t0 = head $ toColumns m
+
+-- | Calculate the first principal component of a set of samples given
+-- a starting estimate of the scores.
+--
+-- Each row in the matrix is one sample. Note that this is transposed
+-- compared to the implementation of principal components using 'svd'
+-- or 'leftSV'
+--
+-- The second argument is a starting guess for the score vector. If
+-- this is close to the actual score vector, then this will cause the
+-- algorthm to converge much faster.
+--
+-- Example:
+-- 
+-- > let (pc,scores,residuals) = firstPCFromScores (fromRows samples) scoresGuess
+-- 
+firstPCFromScores :: Matrix Double
+                  -> Vector Double
+                  -> (Vector Double, Vector Double, Matrix Double)
+firstPCFromScores m t0 = (p,t,r)
     where
       steps = iterate refine (t0,undefined)
       convergence = let scores = map fst steps
@@ -28,7 +53,6 @@ firstPC m = (p,t,r)
                   steps'' = dropWhile (\(c,_) -> c > threshold) steps'
               in snd $ head steps''
       r = m `sub` (t `outer` p)
-      t0 = head $ toColumns m
 
       refine (t,_) = (t', p')
           where

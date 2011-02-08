@@ -11,6 +11,7 @@ main = defaultMain tests
 tests =
     [ testGroup "Accuracy"
       [ testProperty "sameFirstPCAsSVD" prop_sameFirstPCAsSVD
+      , testProperty "scoreGuessStable" prop_scoreGuessStable
       ]
     , testGroup "Correctness"
       [ testProperty "resultCanRecoverInput" prop_recoverInput
@@ -35,8 +36,16 @@ prop_recoverInput m = relErr <= eps
       m' = (t `outer` p) `add` r
       relErr = relativeDifference m m'
 
+prop_scoreGuessStable m = tRelErr <= th .&&. pRelErr <= th
+    where
+      (p,t,_) = firstPC m
+      (p',t',_) = firstPCFromScores m t
+      tRelErr = relativeDifference t t'
+      pRelErr = relativeDifference p p'
+      th = sqrt $ fromIntegral (cols m * rows m) * eps
+
 relativeDifference :: (Normed c t, Container c t) => c t -> c t -> Double
-relativeDifference x y = realToFrac (norm (x `sub` y) / (norm x + norm y))
+relativeDifference x y = realToFrac (norm (x `sub` y) / (peps + norm x + norm y))
     where norm = pnorm Infinity
 
 
