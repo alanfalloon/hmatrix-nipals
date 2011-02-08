@@ -55,7 +55,7 @@ Library
   Exposed-modules:
     Numeric.LinearAlgebra.NIPALS
   Build-depends:
-    base >=4,
+    base >= 3 && < 5,
     hmatrix >= 0.11
 
 Executable test
@@ -64,7 +64,7 @@ Executable test
   if flag(test)
     Build-depends:
       QuickCheck >= 2.4,
-      base >= 4,
+      base >= 3 && < 5,
       hmatrix >= 0.11,
       test-framework >= 0.3,
       test-framework-quickcheck2 >= 0.2.9
