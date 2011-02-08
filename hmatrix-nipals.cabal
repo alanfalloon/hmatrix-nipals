@@ -1,8 +1,7 @@
 Name:                hmatrix-nipals
 Version:             0.1
 Synopsis:
-  Nonlinear Iterative Partial Least Squares method for Principal
-  Components Analysis on large datasets
+  NIPALS method for Principal Components Analysis on large data-sets.
 
 Description:
   NIPALS -- Nonlinear Iterative Partial Least Squares
@@ -45,7 +44,7 @@ Copyright:           Copyright (c) 2011 Alan Falloon
 Stability:           Experimental
 Category:            Math
 Build-type:          Simple
-Cabal-version:       >=1.2
+Cabal-version:       >=1.4
 
 Flag test
   Description:       Build unit-tests
