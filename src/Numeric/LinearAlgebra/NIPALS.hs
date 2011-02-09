@@ -48,7 +48,7 @@ firstPCFromScores m t0 = (p,t,r)
       steps = iterate refine (t0,undefined)
       convergence = let scores = map fst steps
                         dscores = zipWith diffScores scores $ tail scores
-                    in smooth dscores
+                    in dscores
       (t,p) = let steps' = zip convergence $ tail steps
                   steps'' = dropWhile (\(c,_) -> c > threshold) steps'
               in snd $ head steps''
@@ -70,10 +70,6 @@ toUnit :: Vector Double -> Vector Double
 toUnit v = if mag <= 0.0 then dim v |> (1 : repeat 0) else scale (1/mag) v
     where
       mag = norm2 v
-
-smooth :: [Double] -> [Double]
-smooth (x0:xs@(x1:_)) = (2*x0+x1)/3 : smooth xs
-smooth _ = []
 
 -- | Calculate the first principal component -- calculating the
 -- samples fresh on every pass.
