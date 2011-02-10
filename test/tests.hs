@@ -1,4 +1,5 @@
 import Data.List
+import Data.Maybe (fromJust)
 import Numeric.LinearAlgebra
 import Numeric.LinearAlgebra.NIPALS
 import Foreign.Storable
@@ -15,6 +16,7 @@ tests =
       ]
     , testGroup "Correctness"
       [ testProperty "resultCanRecoverInput" prop_recoverInput
+      , testProperty "monadSameAnswer" prop_monadSameAnswer
       ]
     ]
 
@@ -43,6 +45,18 @@ prop_scoreGuessStable m = tRelErr <= th .&&. pRelErr <= th
       tRelErr = relativeDifference t t'
       pRelErr = relativeDifference p p'
       th = sqrt $ fromIntegral (cols m * rows m) * eps
+
+prop_monadSameAnswer m = tRelErr <= th .&&. pRelErr <= th .&&. rRelErr <= th
+    where
+      guess = head $ toColumns m
+      samplesM = return $ toRows m
+      (p,t,r) = firstPCFromScores m guess
+      (p',t') = fromJust $ firstPCFromScoresM samplesM guess
+      r' = fromRows $ residual (toRows m) p' t'
+      tRelErr = relativeDifference t t'
+      pRelErr = relativeDifference p p'
+      rRelErr = if rank m > 2 then relativeDifference r r' else 0
+      th = 1e-7
 
 relativeDifference :: (Normed c t, Container c t) => c t -> c t -> Double
 relativeDifference x y = realToFrac (norm (x `sub` y) / (peps + norm x + norm y))
