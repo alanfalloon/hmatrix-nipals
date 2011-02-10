@@ -63,7 +63,7 @@ firstPCFromScores m t0 = (p,t,r)
             p' = toUnit (trans m <> t)
             t' = m <> p'
 
-      threshold = sqrt (fromIntegral (cols m + rows m)) * eps
+      threshold = 16*eps
 
 diffScores :: Vector Double -> Vector Double -> Double
 diffScores ta tb = let xa = ta<.>ta
@@ -107,7 +107,7 @@ firstPCFromScoresM samplesM t0 = do
           let p' = toUnit p
           t' <- samplesM >>= (\s -> return $ mult1Pass s p')
           return (t',p')
-        threshold = sqrt (fromIntegral (2 * dim t0)) * eps
+        threshold = 16 * eps
         iter t0 t1 p1 | diff < threshold = return $ (p1,t1)
                       | otherwise = do
                                    (t2,p2) <- refine t1
