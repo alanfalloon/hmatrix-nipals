@@ -26,14 +26,14 @@ Description:
   .
   NIPALS is not generally recommended because sample matrices where
   the largest eigenvalues are close in magnitude will cause NIPALS to
-  converge very slowly. In general, Lanczos methods
-  <http://en.wikipedia.org/wiki/Lanczos_algorithm> or some other
-  truncated singular value decomposition algorithm are preferred to
-  NIPALS because of this convergence issue, but these methods often
-  require the sample matrix to fit in memory, or store large
-  conditioning matrices, which isn't always feasible. However, if you
-  know of free and memory-efficient implementations of these more
-  sophisticated algorithms, please contact the author with a pointer.
+  converge very slowly. For sparse matrices, use Lanczos methods
+  <http://en.wikipedia.org/wiki/Lanczos_algorithm>, and for dense
+  matrices, random-projection methods
+  <http://amath.colorado.edu/faculty/martinss/Pubs/2009_HMT_random_review.pdf>
+  can be used. However, these methods are harder to implement in a
+  single pass. If you know of a good, single-pass, and
+  memory-efficient implementation of either of these methods, please
+  contact the author.
 
 Homepage:            http://github.com/alanfalloon/hmatrix-nipals
 Bug-reports:         https://github.com/alanfalloon/hmatrix-nipals/issues
