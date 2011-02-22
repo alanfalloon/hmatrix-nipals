@@ -36,6 +36,7 @@ Description:
   sophisticated algorithms, please contact the author with a pointer.
 
 Homepage:            http://github.com/alanfalloon/hmatrix-nipals
+Bug-reports:         https://github.com/alanfalloon/hmatrix-nipals/issues
 License:             LGPL-2.1
 License-file:        LICENSE
 Author:              Alan Falloon
@@ -44,7 +45,12 @@ Copyright:           Copyright (c) 2011 Alan Falloon
 Stability:           Experimental
 Category:            Math
 Build-type:          Simple
-Cabal-version:       >=1.4
+Cabal-version:       >=1.6
+
+Source-repository head
+  Type:              git
+  Location:          git://github.com/alanfalloon/hmatrix-nipals.git
+  Branch:            master
 
 Flag test
   Description:       Build unit-tests
