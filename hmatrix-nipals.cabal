@@ -1,5 +1,5 @@
 Name:                hmatrix-nipals
-Version:             0.1
+Version:             0.2
 Synopsis:
   NIPALS method for Principal Components Analysis on large data-sets.
 
